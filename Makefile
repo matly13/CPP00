@@ -5,37 +5,36 @@
 #                                                     +:+ +:+         +:+      #
 #    By: martina <martina@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/26 10:38:57 by martina           #+#    #+#              #
-#    Updated: 2024/04/26 10:39:00 by martina          ###   ########.fr        #
+#    Created: 2024/04/26 17:52:27 by martina           #+#    #+#              #
+#    Updated: 2024/04/26 17:55:17 by martina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	megaphone
+NAME = PhoneBook
+FLAGS = -Wall -Wextra -Werror -std=c++98
+INC = Contact.hpp
+CXX = c++
+SRC = PhoneBook.cpp\
+		Contact.cpp\
 
-SRCS		=	megaphone.cpp
-
-CC			=	clang++
-CFLAGS		=	-Wall -Wextra -Werror
-
-RM			=	rm -f
-
-OBJS		=	$(SRCS:.cpp=.o)
-
-%.o: %.cpp
-	@$(CC) $(FLAGS) -c $< -o $@
+OBJ = $(SRC:.cpp=.o)
 
 all : $(NAME)
 
-$(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) $^ -o $(NAME)
-	@echo '$(NAME) compiled!'
+$(NAME) : $(OBJ)
+	$(CXX) $(FLAGS) $^ -o $@
 
-fclean		: clean
-	@$(RM) $(NAME)
+%.o : %.cpp $(INC)
+	$(CXX) $(FLAGS) -c $< -o $@
 
-clean		:
-	@$(RM) $(OBJS)
+clean :
+	rm -rf $(OBJ)
 
-re			:	fclean all
+fclean : clean
+	rm -rf $(NAME)
 
-.PHONY		:	all clean fclean re
+re : fclean
+	make all
+
+.PHONY: all clean fclean re
+
